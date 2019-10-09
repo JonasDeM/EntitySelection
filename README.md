@@ -1,5 +1,6 @@
 # EntitySelection
 A minimal solution for selecting entities in the unity sceneview.
+Tested with both URP and Built-In Render Pipeline. (LWRP and HDRP should also work)
 
 ## How to select
 Make sure your focus is on the sceneview (not gameview)  
@@ -21,7 +22,6 @@ No setup should ever be needed.
 Should never impact the game.  
 
 ## Todo
-* Support Universal Render Pipeline (URP)  
-* Support High Definition Render Pipeline (HDRP)  
+* Confirm works with High Definition Render Pipeline (HDRP)  
 * Use left-click for selection (OnMouseUp event currently gets consumed by the SceneView, not sure a workaround exists)  
-* Low Priority: Performance Improvements  
+* Low Priority: Performance Improvements
