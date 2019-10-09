@@ -21,7 +21,7 @@ No setup should ever be needed.
 Should never impact the game.  
 
 ## Todo
-Support Universal Render Pipeline (URP)  
-Support High Definition Render Pipeline (HDRP)  
-Use left-click for selection (OnMouseUp event currently gets consumed by the SceneView, not sure a workaround exists)  
-Low Priority: Performance Improvements  
+* Support Universal Render Pipeline (URP)  
+* Support High Definition Render Pipeline (HDRP)  
+* Use left-click for selection (OnMouseUp event currently gets consumed by the SceneView, not sure a workaround exists)  
+* Low Priority: Performance Improvements  
