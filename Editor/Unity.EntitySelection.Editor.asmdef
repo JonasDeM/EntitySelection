@@ -1,0 +1,7 @@
+{
+    "name": "Unity.Entity.Selection",
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}

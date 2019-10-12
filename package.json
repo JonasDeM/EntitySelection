@@ -1,0 +1,12 @@
+{
+    "name": "io.github.jonasdem.entityselection",
+    "version": "0.0.1",
+    "displayName": "Entity Selection",
+    "description": "Select your entities!s",
+    "unity": "2019.2",
+    "author": {
+        "name": "Jonas De Maeseneer",
+        "email": "jonas.de.maeseneer@outlook.com",
+        "url": "https://jonasdem.github.io/"
+    }
+}
