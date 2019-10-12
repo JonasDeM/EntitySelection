@@ -1,7 +1,16 @@
 {
-    "name": "Unity.Entity.Selection",
+    "name": "Unity.EntitySelection.Editor",
     "includePlatforms": [
         "Editor"
+    ],
+    "references": [
+        "Unity.Entities",
+        "Unity.Entities.Editor",
+        "Unity.Rendering",
+        "Unity.Rendering.Hybrid",
+        "Unity.Transforms",
+        "Unity.Transforms.Hybrid",
+        "Unity.Mathematics"
     ],
     "excludePlatforms": []
 }
