@@ -1,6 +1,7 @@
 # EntitySelection
 A small package that enables you to select entities in the unity sceneview.  
-Works with every RenderPipeline.
+Works with every RenderPipeline.  
+![EntitySelectionGif](https://jonasdem.github.io/Media/EntitySelection.gif)
 
 ## How to select
 Make sure your focus is on the sceneview (not gameview)  
