@@ -1,0 +1,16 @@
+{
+    "name": "io.github.jonasdem.entityselection",
+    "version": "0.0.1",
+    "displayName": "Entity Selection",
+    "description": "Select your entities!",
+    "unity": "2019.1",
+    "author": {
+        "name": "Jonas De Maeseneer",
+        "email": "jonas.de.maeseneer@outlook.com",
+        "url": "https://jonasdem.github.io/"
+    },
+    "dependencies": {
+        "com.unity.entities": "0.1.1-preview",
+        "com.unity.rendering.hybrid": "0.1.1-preview"
+    }
+}
