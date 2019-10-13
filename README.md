@@ -12,7 +12,7 @@ Press the '1' key (Non Numpad)
 ## How to get this package for your own project
 1. Click the green "Clone or download" button and copy the url.  
 2. In Unity go to Window>Package Manager and Press the + sign in the left-top corner of the Package Manager window.  
-3. Select "Add package from git URl...", Paste the URL and press "Add".  
+3. Select "Add package from git URL...", Paste the URL and press "Add".  
 Done!  
 
 ## Contribution
