@@ -81,6 +81,11 @@ public class EntitySelectionSystem : ComponentSystem
         cmd.SetViewProjectionMatrices(_sceneViewCam.worldToCameraMatrix, _sceneViewCam.projectionMatrix);
         Entities.ForEach((Entity e, RenderMesh mesh, ref LocalToWorld localToWorld) =>
         {
+            if (mesh == null)
+            {
+                return;
+            }
+            
             if (!_entityIndexToMat.ContainsKey(e.Index))
             {
                 var m = new Material(_colorIDShader)
