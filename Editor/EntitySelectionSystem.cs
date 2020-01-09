@@ -81,7 +81,7 @@ public class EntitySelectionSystem : ComponentSystem
         cmd.SetViewProjectionMatrices(_sceneViewCam.worldToCameraMatrix, _sceneViewCam.projectionMatrix);
         Entities.ForEach((Entity e, RenderMesh mesh, ref LocalToWorld localToWorld) =>
         {
-            if (mesh == null)
+            if (mesh.mesh == null)
             {
                 return;
             }
