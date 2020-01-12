@@ -8,7 +8,7 @@ Works with every RenderPipeline.
 
 ## How to select
 1. Make sure you're in PlayMode & your focus is on the sceneview (not gameview)
-2. Point to the entity with mouse pointer (first selection time can take some time, depends on total amount entities with meshes)
+2. Point to the entity with mouse pointer (first selection can take some time, depends on total amount entities with meshes)
 3. Press the '1' key (Non Numpad)  
 => Inspector window should show all info for entity.
 
