@@ -1,4 +1,4 @@
-﻿// Author: Jonas De Maeseneer
+﻿﻿// Author: Jonas De Maeseneer
 
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,7 @@ using Unity.Rendering;
 using Unity.Transforms;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using Object = UnityEngine.Object;
 
@@ -22,6 +23,7 @@ public class EntitySelectionSystem : ComponentSystem
 
     // Instance members
     public EntitySelectionProxy CurrentSelectedEntityProxy;
+    public GameObject WireCube;
     private RenderTexture _objectIDRenderTarget;
     private Shader _colorIDShader;
     private Texture2D _objectID1x1Texture;
@@ -41,6 +43,9 @@ public class EntitySelectionSystem : ComponentSystem
         _colorIDShader = Shader.Find("Unlit/EntityIdShader");
         _objectID1x1Texture = new Texture2D(1, 1, TextureFormat.RGBA32, false);
         CurrentSelectedEntityProxy = ScriptableObject.CreateInstance<EntitySelectionProxy>();
+        WireCube = new GameObject("EntitySelectionWireCube");
+        WireCube.AddComponent<EntitySelectionWireCube>();
+        WireCube.SetActive(false);
         SceneView.duringSceneGui += UpdateView;
     }
 
@@ -70,6 +75,16 @@ public class EntitySelectionSystem : ComponentSystem
             RenderEntityIDs();
             // Getting the pixel at the mouse position and converting the color to an entity
             SelectEntity();
+        }
+        
+        // WireCube
+        bool selected = CurrentSelectedEntityProxy != null && Selection.activeObject == CurrentSelectedEntityProxy;
+        WireCube.SetActive(selected);
+        if (selected)
+        {
+            var bounds = EntityManager.GetComponentData<WorldRenderBounds>(CurrentSelectedEntityProxy.Entity);
+            WireCube.transform.position = bounds.Value.Center;
+            WireCube.transform.localScale = bounds.Value.Size;
         }
     }
 
@@ -175,6 +190,7 @@ public class EntitySelectionSystem : ComponentSystem
         }
 
         Object.Destroy(CurrentSelectedEntityProxy);
+        Object.DestroyImmediate(WireCube.gameObject);
 
         // Clear static variables
         _sceneViewCam = null;
