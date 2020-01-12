@@ -7,9 +7,9 @@ Works with every RenderPipeline.
 ![EntitySelectionGif](https://jonasdem.github.io/Media/EntitySelection.gif)
 
 ## How to select
-Make sure your focus is on the sceneview (not gameview)
-Point to the entity with mouse pointer
-Press the '1' key (Non Numpad)
+1. Make sure you're in PlayMode & your focus is on the sceneview (not gameview)
+2. Point to the entity with mouse pointer (first selection can take some time, depends on total amount entities with meshes)
+3. Press the '1' key (Non Numpad)  
 => Inspector window should show all info for entity.
 
 ## How to get this package for your own project
@@ -47,6 +47,5 @@ No setup should ever be needed.
 Thanks to [Tom](https://github.com/Moosichu) for making this repo a package.
 
 ## Todo
-* Visual selection feedback (Blocked, Adding CMD Buffers to SceneView Camera seems to be ignored.)
 * Use left-click for selection (Blocked, OnMouseUp event currently gets consumed by the SceneView, not sure a workaround exists)
-* Low Priority: Performance Improvements (Tested with 20.000 entities, no issues)
+* Low Priority: Performance Improvements (Waiting for MaterialPropertyBlocks in DOTS)
