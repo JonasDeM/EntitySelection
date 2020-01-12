@@ -47,6 +47,5 @@ No setup should ever be needed.
 Thanks to [Tom](https://github.com/Moosichu) for making this repo a package.
 
 ## Todo
-* Visual selection feedback (Blocked, Adding CMD Buffers to SceneView Camera seems to be ignored.)
 * Use left-click for selection (Blocked, OnMouseUp event currently gets consumed by the SceneView, not sure a workaround exists)
-* Low Priority: Performance Improvements (Tested with 20.000 entities, no issues)
+* Low Priority: Performance Improvements (Waiting for MaterialPropertyBlocks in DOTS)
