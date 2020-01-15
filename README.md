@@ -46,5 +46,6 @@ No setup should ever be needed.
 
 Thanks to [Tom](https://github.com/Moosichu) for making this repo a package.
 
-## Todo
-* Use left-click for selection (Blocked, OnMouseUp event currently gets consumed by the SceneView, not sure a workaround exists)
+## 2019.2 branch
+If you want a 2019.2 (And probably 2019.1) compatible version, use the 2019.2 branch.
+Use "https://github.com/JonasDeM/EntitySelection.git#2019.2" in the "Install via git url" steps.
