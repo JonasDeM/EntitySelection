@@ -1,4 +1,4 @@
-﻿﻿// Author: Jonas De Maeseneer
+﻿﻿﻿// Author: Jonas De Maeseneer
 
 using System;
 using System.Collections.Generic;
@@ -27,15 +27,11 @@ public class EntitySelectionSystem : ComponentSystem
     private Shader _colorIDShader;
     private Texture2D _objectID1x1Texture;
 
-    // Would be great if we didn't have to store the version or could put it in the rendered color
-    // another nice thing could be that we only have 1 material just change per instance color
-    private readonly Dictionary<int, VersionAndMaterial> _entityIndexToMat = new Dictionary<int, VersionAndMaterial>();
-
-    private struct VersionAndMaterial
-    {
-        public Material Material;
-        public int Version;
-    }
+    // Material
+    private readonly Dictionary<int, int> _entityIndexToVersion = new Dictionary<int, int>();
+    private static readonly int ColorPropertyID = Shader.PropertyToID("_Color");
+    private MaterialPropertyBlock _idMaterialPropertyBlock;
+    private Material _idMaterial;
 
     protected override void OnCreate()
     {
@@ -43,6 +39,8 @@ public class EntitySelectionSystem : ComponentSystem
         _objectID1x1Texture = new Texture2D(1, 1, TextureFormat.RGBA32, false);
         CurrentSelectedEntityProxy = ScriptableObject.CreateInstance<EntitySelectionProxy>();
         SceneView.duringSceneGui += UpdateView;
+        _idMaterialPropertyBlock = new MaterialPropertyBlock();
+        _idMaterial = new Material(_colorIDShader);
     }
 
     protected override void OnUpdate()
@@ -86,25 +84,9 @@ public class EntitySelectionSystem : ComponentSystem
             {
                 return;
             }
-            
-            if (!_entityIndexToMat.ContainsKey(e.Index))
-            {
-                var m = new Material(_colorIDShader)
-                {
-                    color = IndexToColor(e.Index)
-                };
-                _entityIndexToMat[e.Index] = new VersionAndMaterial
-                {
-                    Version = e.Version,
-                    Material = m
-                };
-            }
-
-            var matAndVersion = _entityIndexToMat[e.Index];
-            matAndVersion.Version = e.Version;
-            _entityIndexToMat[e.Index] = matAndVersion;
-
-            cmd.DrawMesh(mesh.mesh, localToWorld.Value, matAndVersion.Material);
+            _entityIndexToVersion[e.Index] = e.Version;
+            _idMaterialPropertyBlock.SetColor(ColorPropertyID, IndexToColor(e.Index));
+            cmd.DrawMesh(mesh.mesh, localToWorld.Value, _idMaterial, mesh.subMesh, 0, _idMaterialPropertyBlock);
         });
         Graphics.ExecuteCommandBuffer(cmd);
     }
@@ -115,9 +97,9 @@ public class EntitySelectionSystem : ComponentSystem
         {
             Index = ColorToIndex(GetColorAtMousePos(_clickedMousePos, _objectIDRenderTarget))
         };
-        if (_entityIndexToMat.ContainsKey(selectedEntity.Index))
+        if (_entityIndexToVersion.ContainsKey(selectedEntity.Index))
         {
-            selectedEntity.Version = _entityIndexToMat[selectedEntity.Index].Version;
+            selectedEntity.Version = _entityIndexToVersion[selectedEntity.Index];
             CurrentSelectedEntityProxy.SetEntity(World, selectedEntity);
 
             Selection.activeObject = CurrentSelectedEntityProxy;

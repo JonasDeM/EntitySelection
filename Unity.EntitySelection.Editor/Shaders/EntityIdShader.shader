@@ -1,4 +1,4 @@
-﻿// Author: Jonas De Maeseneer
+﻿﻿// Author: Jonas De Maeseneer
 
 Shader "Unlit/EntityIdShader"
 {
