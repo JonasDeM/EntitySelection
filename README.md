@@ -48,4 +48,3 @@ Thanks to [Tom](https://github.com/Moosichu) for making this repo a package.
 
 ## Todo
 * Use left-click for selection (Blocked, OnMouseUp event currently gets consumed by the SceneView, not sure a workaround exists)
-* Low Priority: Performance Improvements (Waiting for MaterialPropertyBlocks in DOTS)
