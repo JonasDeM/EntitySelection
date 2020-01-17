@@ -11,16 +11,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using Object = UnityEngine.Object;
-
-[AlwaysUpdateSystem]
+  
+[ExecuteAlways]
 [UpdateInGroup(typeof(PresentationSystemGroup))]
 public class EntitySelectionSystem : ComponentSystem
 {
-    // Static scene view data
-    private static Camera _sceneViewCam;
-    private static bool _clicked;
-    private static Vector2 _clickedMousePos;
-
     // Instance members
     public EntitySelectionProxy CurrentSelectedEntityProxy;
     private RenderTexture _objectIDRenderTarget;
@@ -43,17 +38,20 @@ public class EntitySelectionSystem : ComponentSystem
         _idMaterial = new Material(_colorIDShader);
     }
 
-    protected override void OnUpdate()
+    private void OnClicked(Vector2 mousePos, Camera camera)
     {
-        if (_sceneViewCam == null)
-            return;
-
+        // Needs to happen when the scene changed
+        if (_idMaterial == null)
+        {
+            OnCreate();
+        }
+        
         // Initial creation + on window resize
         if (_objectIDRenderTarget == null ||
-            _sceneViewCam.targetTexture.width  != _objectIDRenderTarget.width ||
-            _sceneViewCam.targetTexture.height != _objectIDRenderTarget.height)
+            camera.targetTexture.width  != _objectIDRenderTarget.width ||
+            camera.targetTexture.height != _objectIDRenderTarget.height)
         {
-            _objectIDRenderTarget = new RenderTexture(_sceneViewCam.targetTexture.width, _sceneViewCam.targetTexture.height, 0)
+            _objectIDRenderTarget = new RenderTexture(camera.targetTexture.width, camera.targetTexture.height, 0)
             {
                 antiAliasing = 1,
                 filterMode = FilterMode.Point,
@@ -62,22 +60,18 @@ public class EntitySelectionSystem : ComponentSystem
             };
         }
 
-        if (_clicked)
-        {
-            _clicked = false;
-            // Rendering Unique color per entity
-            RenderEntityIDs();
-            // Getting the pixel at the mouse position and converting the color to an entity
-            SelectEntity();
-        }
+        // Rendering Unique color per entity
+        RenderEntityIDs(camera);
+        // Getting the pixel at the mouse position and converting the color to an entity
+        SelectEntity(mousePos);
     }
 
-    private void RenderEntityIDs()
+    private void RenderEntityIDs(Camera camera)
     {
         var cmd = new CommandBuffer();
         cmd.SetRenderTarget(_objectIDRenderTarget);
         cmd.ClearRenderTarget(true, true, Color.white);
-        cmd.SetViewProjectionMatrices(_sceneViewCam.worldToCameraMatrix, _sceneViewCam.projectionMatrix);
+        cmd.SetViewProjectionMatrices(camera.worldToCameraMatrix, camera.projectionMatrix);
         Entities.ForEach((Entity e, RenderMesh mesh, ref LocalToWorld localToWorld) =>
         {
             if (mesh.mesh == null)
@@ -91,11 +85,11 @@ public class EntitySelectionSystem : ComponentSystem
         Graphics.ExecuteCommandBuffer(cmd);
     }
 
-    private void SelectEntity()
+    private void SelectEntity(Vector2 mousePos)
     {
         var selectedEntity = new Entity
         {
-            Index = ColorToIndex(GetColorAtMousePos(_clickedMousePos, _objectIDRenderTarget))
+            Index = ColorToIndex(GetColorAtMousePos(mousePos, _objectIDRenderTarget))
         };
         if (_entityIndexToVersion.ContainsKey(selectedEntity.Index))
         {
@@ -116,7 +110,7 @@ public class EntitySelectionSystem : ComponentSystem
         _objectID1x1Texture.ReadPixels(new Rect(posLocalToSceneView.x, posLocalToSceneView.y, 1, 1), 0, 0, false);
         _objectID1x1Texture.Apply();
         RenderTexture.active = null;
-
+        
         return _objectID1x1Texture.GetPixel(0, 0);
     }
 
@@ -137,15 +131,10 @@ public class EntitySelectionSystem : ComponentSystem
     {
         if (Event.current != null)
         {
-            if (!_sceneViewCam == sceneView.camera)
+            if (Event.current.keyCode == KeyCode.Alpha1 && Event.current.type == EventType.KeyDown)
             {
-                _sceneViewCam = sceneView.camera;
-            }
-
-            if (Event.current.keyCode == KeyCode.Alpha1)
-            {
-                _clicked = true;
-                _clickedMousePos = Event.current.mousePosition;
+                var system = World.Active.GetOrCreateSystem<EntitySelectionSystem>();
+                system.OnClicked(Event.current.mousePosition, sceneView.camera);
             }
         }
     }
@@ -157,10 +146,13 @@ public class EntitySelectionSystem : ComponentSystem
             Selection.activeObject = null;
         }
 
-        Object.Destroy(CurrentSelectedEntityProxy);
+        Object.DestroyImmediate(CurrentSelectedEntityProxy);
+        Object.DestroyImmediate(_idMaterial);
+        Object.DestroyImmediate(_objectID1x1Texture);
+    }
 
-        // Clear static variables
-        _sceneViewCam = null;
-        _clicked = false;
+    protected override void OnUpdate()
+    {
+        // Everything happens in OnClicked which is called on an editor event
     }
 }
