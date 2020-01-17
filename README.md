@@ -7,7 +7,7 @@ It works both in play mode & edit mode.
 ![EntitySelectionGif](https://jonasdem.github.io/Media/EntitySelection.gif)
 
 ## How to select
-(0. Enable DOTS>LivelinkMode>LiveConversionInEditMode to have all entities edit mode.)
+0. (Enable DOTS>LivelinkMode>LiveConversionInEditMode to have all entities edit mode.)
 1. Make sure your focus is on the sceneview (not gameview)
 2. Point to the entity with mouse pointer
 3. Press the '1' key (Non Numpad)  
