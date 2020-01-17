@@ -2,12 +2,13 @@
 
 [![openupm](https://img.shields.io/npm/v/io.github.jonasdem.entityselection?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/io.github.jonasdem.entityselection/)
 
-A small package that enables you to select entities in the unity sceneview.
-Works with every RenderPipeline.
+A small package that enables you to select entities in the unity sceneview.  
+It works both in play mode & edit mode.  
 ![EntitySelectionGif](https://jonasdem.github.io/Media/EntitySelection.gif)
 
 ## How to select
-1. Make sure you're in PlayMode & your focus is on the sceneview (not gameview)
+(0. Enable DOTS>LivelinkMode>LiveConversionInEditMode to have all entities edit mode.)
+1. Make sure your focus is on the sceneview (not gameview)
 2. Point to the entity with mouse pointer
 3. Press the '1' key (Non Numpad)  
 => Inspector window should show all info for entity.
