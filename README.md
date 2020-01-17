@@ -8,7 +8,7 @@ Works with every RenderPipeline.
 
 ## How to select
 1. Make sure you're in PlayMode & your focus is on the sceneview (not gameview)
-2. Point to the entity with mouse pointer (first selection can take some time, depends on total amount entities with meshes)
+2. Point to the entity with mouse pointer
 3. Press the '1' key (Non Numpad)  
 => Inspector window should show all info for entity.
 
@@ -46,5 +46,6 @@ No setup should ever be needed.
 
 Thanks to [Tom](https://github.com/Moosichu) for making this repo a package.
 
-## Todo
-* Use left-click for selection (Blocked, OnMouseUp event currently gets consumed by the SceneView, not sure a workaround exists)
+## 2019.2 branch
+If you want a 2019.2 (And probably 2019.1) compatible version, use the 2019.2 branch.
+Use "https://github.com/JonasDeM/EntitySelection.git#2019.2" in the "Install via git url" steps.
