@@ -15,14 +15,6 @@ It works both in play mode & edit mode.
 
 ## How to get this package for your own project
 
-### Install via OpenUPM
-
-The package is available on the [openupm registry](https://openupm.com/). You can install it via [openupm-cli](https://github.com/openupm/openupm-cli#openupm-cli).
-
-```
-openupm add io.github.jonasdem.entityselection
-```
-
 ### Install via git url
 
 1. Click the green "Clone or download" button and copy the url.
@@ -38,6 +30,14 @@ Or manually add the dependency to the Packages/manifest.json file.
         "io.github.jonasdem.entityselection": "https://github.com/JonasDeM/EntitySelection.git"
     }
 }
+```
+
+### Install via OpenUPM
+
+The package is available on the [openupm registry](https://openupm.com/). You can install it via [openupm-cli](https://github.com/openupm/openupm-cli#openupm-cli).
+
+```
+openupm add io.github.jonasdem.entityselection
 ```
 
 ## Contribution
