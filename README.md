@@ -4,7 +4,7 @@
 
 A small package that enables you to select entities in the unity sceneview.  
 It works both in play mode & edit mode.  
-![EntitySelectionGif](https://jonasdem.github.io/Media/EntitySelection.gif)
+![EntitySelectionGif](https://github.com/JonasDeM/JonasDeM.github.io/blob/master/Media/SelectionShowOff4.gif)
 
 ## How to select
 0. (Optional: Enable DOTS>LivelinkMode>LiveConversionInEditMode to have all entities in edit mode.)
@@ -14,14 +14,6 @@ It works both in play mode & edit mode.
 => Inspector window should show all info for entity.
 
 ## How to get this package for your own project
-
-### Install via OpenUPM
-
-The package is available on the [openupm registry](https://openupm.com/). You can install it via [openupm-cli](https://github.com/openupm/openupm-cli#openupm-cli).
-
-```
-openupm add io.github.jonasdem.entityselection
-```
 
 ### Install via git url
 
@@ -38,6 +30,14 @@ Or manually add the dependency to the Packages/manifest.json file.
         "io.github.jonasdem.entityselection": "https://github.com/JonasDeM/EntitySelection.git"
     }
 }
+```
+
+### Install via OpenUPM
+
+The package is available on the [openupm registry](https://openupm.com/). You can install it via [openupm-cli](https://github.com/openupm/openupm-cli#openupm-cli).
+
+```
+openupm add io.github.jonasdem.entityselection
 ```
 
 ## Contribution
