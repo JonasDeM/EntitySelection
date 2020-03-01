@@ -10,7 +10,7 @@
     "url": "https://jonasdem.github.io/"
   },
   "dependencies": {
-    "com.unity.entities": "0.1.1-preview",
-    "com.unity.rendering.hybrid": "0.1.1-preview"
+    "com.unity.entities": "0.6.0-preview",
+    "com.unity.rendering.hybrid": "0.3.4-preview"
   }
 }
