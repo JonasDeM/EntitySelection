@@ -108,11 +108,11 @@ public class EntitySelectionSystem : ComponentSystem
     {
         RenderTexture.active = objectIdTex;
 
-        // clicked outside of sceneview
+        // clicked outside of scene view
         if (posLocalToSceneView.x < 0 || posLocalToSceneView.x > objectIdTex.width
             || posLocalToSceneView.y < 0 || posLocalToSceneView.y > objectIdTex.height)
         {
-            return new Color(0,0,0);
+            return new Color(0,0,0); // results in Entity.Null
         }
 
         // handles when the edges of the screen are clicked

@@ -15,8 +15,12 @@ public class EntitySelectionEditorTool : EditorTool, IDrawSelectedHandles
         EntitySelectionProxy entityProxy = target as EntitySelectionProxy;
         if (entityProxy == null)
             return;
+
+        var world = entityProxy.World;
+        if (!world.EntityManager.HasComponent<WorldRenderBounds>(entityProxy.Entity))
+            return;
+        var bounds = world.EntityManager.GetComponentData<WorldRenderBounds>(entityProxy.Entity).Value;
         
-        var bounds = entityProxy.World.EntityManager.GetComponentData<WorldRenderBounds>(entityProxy.Entity).Value;
         Handles.color = Color.green;
         Handles.DrawWireCube(bounds.Center, bounds.Size);
     }
