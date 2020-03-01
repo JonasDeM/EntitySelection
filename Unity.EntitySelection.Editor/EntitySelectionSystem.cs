@@ -107,6 +107,18 @@ public class EntitySelectionSystem : ComponentSystem
     private Color GetColorAtMousePos(Vector2 posLocalToSceneView, RenderTexture objectIdTex)
     {
         RenderTexture.active = objectIdTex;
+
+        // clicked outside of sceneview
+        if (posLocalToSceneView.x < 0 || posLocalToSceneView.x > objectIdTex.width
+            || posLocalToSceneView.y < 0 || posLocalToSceneView.y > objectIdTex.height)
+        {
+            return new Color(0,0,0);
+        }
+
+        // handles when the edges of the screen are clicked
+        posLocalToSceneView.x = Mathf.Clamp(posLocalToSceneView.x, 0, objectIdTex.width - 1);
+        posLocalToSceneView.y = Mathf.Clamp(posLocalToSceneView.y, 0, objectIdTex.height - 1);
+        
         _objectID1x1Texture.ReadPixels(new Rect(posLocalToSceneView.x, posLocalToSceneView.y, 1, 1), 0, 0, false);
         _objectID1x1Texture.Apply();
         RenderTexture.active = null;
@@ -133,8 +145,11 @@ public class EntitySelectionSystem : ComponentSystem
         {
             if (Event.current.keyCode == KeyCode.Alpha1 && Event.current.type == EventType.KeyDown)
             {
-                var system = World.Active.GetOrCreateSystem<EntitySelectionSystem>();
-                system.OnClicked(Event.current.mousePosition, sceneView.camera);
+                foreach (var world in World.AllWorlds)
+                {
+                    var system = world.GetExistingSystem<EntitySelectionSystem>();
+                    system?.OnClicked(Event.current.mousePosition, sceneView.camera);
+                }
             }
         }
     }
