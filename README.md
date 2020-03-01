@@ -4,7 +4,7 @@
 
 A small package that enables you to select entities in the unity sceneview.  
 It works both in play mode & edit mode.  
-![EntitySelectionGif](https://jonasdem.github.io/Media/EntitySelection.gif)
+![EntitySelectionGif](https://jonasdem.github.io/Media/SelectionShowOff4.gif)
 
 ## How to select
 0. (Optional: Enable DOTS>LivelinkMode>LiveConversionInEditMode to have all entities in edit mode.)
