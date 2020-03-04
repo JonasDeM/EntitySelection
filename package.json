@@ -1,6 +1,6 @@
 {
   "name": "io.github.jonasdem.entityselection",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "displayName": "Entity Selection",
   "description": "Select your entities!\nFocus on the SceneView, point to the entity & press 1 (non-numpad).",
   "unity": "2019.3",
