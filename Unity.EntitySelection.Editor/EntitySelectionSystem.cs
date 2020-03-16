@@ -145,7 +145,7 @@ public class EntitySelectionSystem : ComponentSystem
         {
             if (Event.current.keyCode == KeyCode.Alpha1 && Event.current.type == EventType.KeyDown)
             {
-                foreach (var world in World.AllWorlds)
+                foreach (var world in World.All)
                 {
                     var system = world.GetExistingSystem<EntitySelectionSystem>();
                     system?.OnClicked(Event.current.mousePosition, sceneView.camera);
