@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Unity.Entities;
 using Unity.Entities.Editor;
 using Unity.Rendering;
@@ -27,6 +28,9 @@ public class EntitySelectionSystem : ComponentSystem
     private static readonly int ColorPropertyID = Shader.PropertyToID("_Color");
     private MaterialPropertyBlock _idMaterialPropertyBlock;
     private Material _idMaterial;
+    
+    // cached reflection variable to find actual scene view camera rect
+    private static readonly PropertyInfo _sceneViewCameraRectProp = typeof(SceneView).GetProperty("cameraRect", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
     protected override void OnCreate()
     {
@@ -38,7 +42,7 @@ public class EntitySelectionSystem : ComponentSystem
         _idMaterial = new Material(_colorIDShader);
     }
 
-    private void OnClicked(Vector2 mousePos, Camera camera)
+    private void OnClicked(Vector2 mousePos, Camera camera, int renderTextureWidth, int renderTextureHeight)
     {
         // Needs to happen when the scene changed
         if (_idMaterial == null)
@@ -48,10 +52,10 @@ public class EntitySelectionSystem : ComponentSystem
         
         // Initial creation + on window resize
         if (_objectIDRenderTarget == null ||
-            camera.targetTexture.width  != _objectIDRenderTarget.width ||
-            camera.targetTexture.height != _objectIDRenderTarget.height)
+            renderTextureWidth  != _objectIDRenderTarget.width ||
+            renderTextureHeight != _objectIDRenderTarget.height)
         {
-            _objectIDRenderTarget = new RenderTexture(camera.targetTexture.width, camera.targetTexture.height, 0)
+            _objectIDRenderTarget = new RenderTexture(renderTextureWidth, renderTextureHeight, 0)
             {
                 antiAliasing = 1,
                 filterMode = FilterMode.Point,
@@ -70,7 +74,7 @@ public class EntitySelectionSystem : ComponentSystem
     {
         var cmd = new CommandBuffer();
         cmd.SetRenderTarget(_objectIDRenderTarget);
-        cmd.ClearRenderTarget(true, true, Color.white);
+        cmd.ClearRenderTarget(true, true, new Color(0,0,0,0));
         cmd.SetViewProjectionMatrices(camera.worldToCameraMatrix, camera.projectionMatrix);
         Entities.ForEach((Entity e, RenderMesh mesh, ref LocalToWorld localToWorld) =>
         {
@@ -112,7 +116,7 @@ public class EntitySelectionSystem : ComponentSystem
         if (posLocalToSceneView.x < 0 || posLocalToSceneView.x > objectIdTex.width
             || posLocalToSceneView.y < 0 || posLocalToSceneView.y > objectIdTex.height)
         {
-            return new Color(0,0,0); // results in Entity.Null
+            return new Color(0,0,0,0); // results in Entity.Null
         }
 
         // handles when the edges of the screen are clicked
@@ -148,7 +152,19 @@ public class EntitySelectionSystem : ComponentSystem
                 foreach (var world in World.All)
                 {
                     var system = world.GetExistingSystem<EntitySelectionSystem>();
-                    system?.OnClicked(Event.current.mousePosition, sceneView.camera);
+
+                    Rect cameraRect;
+                    try
+                    {
+                        cameraRect = (Rect) _sceneViewCameraRectProp.GetValue(sceneView);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogWarning($"EntitySelectionSystem couldn't determine camera rect of scene view. Using fallback rect. \n {e}");
+                        cameraRect = sceneView.position;
+                    }
+                    
+                    system?.OnClicked(Event.current.mousePosition, sceneView.camera, (int) cameraRect.width, (int) cameraRect.height);
                 }
             }
         }
