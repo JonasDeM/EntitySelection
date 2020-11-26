@@ -39,7 +39,12 @@ public class EntitySelectionSystem : ComponentSystem
         CurrentSelectedEntityProxy = ScriptableObject.CreateInstance<EntitySelectionProxy>();
         SceneView.duringSceneGui += UpdateView;
         _idMaterialPropertyBlock = new MaterialPropertyBlock();
-        _idMaterial = new Material(_colorIDShader);
+        
+        // On first load of the package the shader can't be found, but OnClicked handles null materials
+        if (_colorIDShader)
+        {
+            _idMaterial = new Material(_colorIDShader);
+        }
     }
 
     private void OnClicked(Vector2 mousePos, Camera camera, int renderTextureWidth, int renderTextureHeight)
