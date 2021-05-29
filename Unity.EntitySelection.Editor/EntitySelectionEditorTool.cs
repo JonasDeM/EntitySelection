@@ -13,7 +13,7 @@ public class EntitySelectionEditorTool : EditorTool, IDrawSelectedHandles
     public void OnDrawHandles()
     {
         EntitySelectionProxy entityProxy = target as EntitySelectionProxy;
-        if (entityProxy == null)
+        if (entityProxy == null || !entityProxy.Exists)
             return;
 
         var world = entityProxy.World;

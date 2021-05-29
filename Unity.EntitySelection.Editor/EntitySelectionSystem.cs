@@ -18,7 +18,6 @@ using Object = UnityEngine.Object;
 public class EntitySelectionSystem : ComponentSystem
 {
     // Instance members
-    public EntitySelectionProxy CurrentSelectedEntityProxy;
     private RenderTexture _objectIDRenderTarget;
     private Shader _colorIDShader;
     private Texture2D _objectID1x1Texture;
@@ -36,7 +35,6 @@ public class EntitySelectionSystem : ComponentSystem
     {
         _colorIDShader = Shader.Find("Unlit/EntityIdShader");
         _objectID1x1Texture = new Texture2D(1, 1, TextureFormat.RGBA32, false);
-        CurrentSelectedEntityProxy = ScriptableObject.CreateInstance<EntitySelectionProxy>();
         SceneView.duringSceneGui += UpdateView;
         _idMaterialPropertyBlock = new MaterialPropertyBlock();
         
@@ -103,9 +101,7 @@ public class EntitySelectionSystem : ComponentSystem
         if (_entityIndexToVersion.ContainsKey(selectedEntity.Index))
         {
             selectedEntity.Version = _entityIndexToVersion[selectedEntity.Index];
-            CurrentSelectedEntityProxy.SetEntity(World, selectedEntity);
-
-            Selection.activeObject = CurrentSelectedEntityProxy;
+            EntitySelectionProxy.SelectEntity(World, selectedEntity);
         }
         else
         {
@@ -177,12 +173,6 @@ public class EntitySelectionSystem : ComponentSystem
 
     protected override void OnDestroy()
     {
-        if (Selection.activeObject == CurrentSelectedEntityProxy)
-        {
-            Selection.activeObject = null;
-        }
-
-        Object.DestroyImmediate(CurrentSelectedEntityProxy);
         Object.DestroyImmediate(_idMaterial);
         Object.DestroyImmediate(_objectID1x1Texture);
     }

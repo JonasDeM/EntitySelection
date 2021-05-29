@@ -1,6 +1,6 @@
 {
   "name": "io.github.jonasdem.entityselection",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "displayName": "Entity Selection",
   "description": "Select your entities!\nFocus on the SceneView, point to the entity & press 1 (non-numpad).",
   "unity": "2020.1",
@@ -10,7 +10,7 @@
     "url": "https://jonasdem.github.io/"
   },
   "dependencies": {
-    "com.unity.rendering.hybrid": "0.10.0-preview.21"
+    "com.unity.rendering.hybrid": "0.11.0-preview.44"
   },
   "type": "tool",
   "hideInEditor": false
