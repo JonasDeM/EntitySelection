@@ -1,6 +1,6 @@
 *With Unity Entities 1.0 dropping at the end of 2022 this package has become mostly redundant.*  
 *It has served its purpose since 2019, but I won't be updating this package anymore.*  
-*I'm leaving it online anyway since the implementation can still be useful as reference for GPU Picking during gameplay.*  
+*I'm leaving it online anyway since the implementation can still be useful for users using older versions of the entities package or as a reference for GPU Picking during gameplay.*  
 
 # EntitySelection
 
