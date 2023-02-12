@@ -1,3 +1,7 @@
+*With Unity Entities 1.0 dropping at the end of 2022 this package has become mostly redundant.*  
+*It has served its purpose since 2019, but I won't be updating this package anymore.*  
+*I'm leaving it online anyway since the implementation can still be useful as reference for GPU Picking during gameplay.*  
+
 # EntitySelection
 
 [![openupm](https://img.shields.io/npm/v/io.github.jonasdem.entityselection?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/io.github.jonasdem.entityselection/)
